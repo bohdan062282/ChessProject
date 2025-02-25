@@ -518,6 +518,7 @@ MonoBehaviour:
   prefab: {fileID: 7265213708357373278, guid: 02fd3660216b14940af5c0a90ffa78ab, type: 3}
   leftBottomCorner: {fileID: 523677948}
   rightTopCorner: {fileID: 2062296008}
+  pawnPrefab: {fileID: 1948531113715822175, guid: ae3701c886207d343a526dd0c2ee9d08, type: 3}
 --- !u!4 &498633991
 Transform:
   m_ObjectHideFlags: 0
