@@ -128,14 +128,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -6593916628321731266, guid: 5b856ec4f8f8cb84f861f8f8a026c288, type: 3}
-      propertyPath: rightTopCorner
-      value: 
-      objectReference: {fileID: 2062296008}
-    - target: {fileID: -6593916628321731266, guid: 5b856ec4f8f8cb84f861f8f8a026c288, type: 3}
-      propertyPath: leftBottomCorner
-      value: 
-      objectReference: {fileID: 523677948}
-    - target: {fileID: -6593916628321731266, guid: 5b856ec4f8f8cb84f861f8f8a026c288, type: 3}
       propertyPath: chessboardGenerator.rightTopCorner
       value: 
       objectReference: {fileID: 2062296008}

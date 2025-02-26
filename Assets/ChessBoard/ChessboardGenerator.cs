@@ -7,39 +7,33 @@ public class ChessboardGenerator
     [SerializeField] public Transform leftBottomCorner;
     [SerializeField] public Transform rightTopCorner;
 
-    [SerializeField] private GameObject pawnPrefab;
-    [SerializeField] private GameObject rookPrefab;
+    [Space(10)]
+    [Header("Element 1 - need to be null")]
 
-    public static readonly int[,] BASIC_LAYOUT = new int[,] {   { 0, 1, 0, 0 ,0 ,0 ,0 ,0 },
-                                                                { 0, 1, 0, 0 ,0 ,0 ,0 ,0 },
-                                                                { 0, 1, 0, 0 ,0 ,0 ,0 ,0 },
-                                                                { 0, 1, 0, 0 ,0 ,0 ,0 ,0 },
-                                                                { 0, 1, 0, 0 ,0 ,0 ,0 ,0 },
-                                                                { 0, 1, 0, 0 ,0 ,0 ,0 ,0 },
-                                                                { 0, 1, 0, 0 ,0 ,0 ,0 ,0 },
-                                                                { 0, 1, 0, 0 ,0 ,0 ,0 ,0 }};
+    [SerializeField] private GameObject[] figurePrefabs;
+
+
+    public static readonly int[,] BASIC_LAYOUT = new int[,] {   { 2, 1, 0, 0 ,0 ,0 ,7 ,8 },
+                                                                { 3, 1, 0, 0 ,0 ,0 ,7 ,9 },
+                                                                { 4, 1, 0, 0 ,0 ,0 ,7 ,10 },
+                                                                { 5, 1, 0, 0 ,0 ,0 ,7 ,11 },
+                                                                { 6, 1, 0, 0 ,0 ,0 ,7 ,12 },
+                                                                { 4, 1, 0, 0 ,0 ,0 ,7 ,10 },
+                                                                { 3, 1, 0, 0 ,0 ,0 ,7 ,9 },
+                                                                { 2, 1, 0, 0 ,0 ,0 ,7 ,8 }};
 
     public void InitializeFigures(ChessboardScript chessboard, int[,] layout)
     {
-        for (int i = 0; i < 8; i++)
+        if (figurePrefabs.Length > 12)
         {
-            for (int j = 0; j < 8; j++)
+            for (int i = 0; i < 8; i++)
             {
-                switch (layout[i,j])
+                for (int j = 0; j < 8; j++)
                 {
-                    case 1:
-                        {
-                            InstantiateFigure(chessboard, pawnPrefab, i, j);
-                            break;
-                        }
-                    case 2:
-                        {
-                            InstantiateFigure(chessboard, rookPrefab, i, j);
-                            break;
-                        }
+                    if (layout[i, j] != 0) InstantiateFigure(chessboard, figurePrefabs[layout[i, j]], i, j);
                 }
             }
-        }
+        }  
     }
     private static void InstantiateFigure(ChessboardScript chessboard, GameObject figurePrefab, int x, int z)
     {
