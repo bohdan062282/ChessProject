@@ -30,16 +30,20 @@ public class ChessboardGenerator
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    if (layout[i, j] != 0) InstantiateFigure(chessboard, figurePrefabs[layout[i, j]], i, j);
+                    if (layout[i, j] != 0)
+                    {
+                        if (layout[i, j] < 7) InstantiateFigure(chessboard, figurePrefabs[layout[i, j]], FigureColor.WHITE, i, j);
+                        else InstantiateFigure(chessboard, figurePrefabs[layout[i, j]], FigureColor.BLACK, i, j);
+                    }
                 }
             }
         }  
     }
-    private static void InstantiateFigure(ChessboardScript chessboard, GameObject figurePrefab, int x, int z)
+    private static void InstantiateFigure(ChessboardScript chessboard, GameObject figurePrefab, FigureColor type, int x, int z)
     {
         GameObject gameObject = UnityEngine.GameObject.Instantiate(figurePrefab);
         chessboard.getChessboard()[x, z].figure = gameObject.GetComponent<Figure>();
-        chessboard.getChessboard()[x, z].figure.Initialize(chessboard, x, z);
+        chessboard.getChessboard()[x, z].figure.Initialize(chessboard, x, z, type);
     }
     public static (Figure figure, Vector3 position)[,] generateChessboard(Transform leftBottom, Transform rightTop)
     {

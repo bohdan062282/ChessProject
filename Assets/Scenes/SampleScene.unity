@@ -727,6 +727,10 @@ MonoBehaviour:
   cinemachineFollow: {fileID: 1003379612}
   cinemachineHardLookAt: {fileID: 1003379611}
   cameraCenterObject: {fileID: 836115954}
+  mainCamera: {fileID: 330585545}
+  figureLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!4 &1762643682
 Transform:
   m_ObjectHideFlags: 0

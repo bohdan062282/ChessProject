@@ -17,11 +17,19 @@ public class Figure : MonoBehaviour
     {
 
     }
-    public void Initialize(ChessboardScript chessboardScript, int x, int z)
+    public void Initialize(ChessboardScript chessboardScript, int x, int z, FigureColor type)
     {
         _chessboardScript = chessboardScript;
         _x = x;
         _z = z;
+
+        Type = type;
+
+        Outline outline = gameObject.GetComponent<Outline>();
+        outline.OutlineColor = Color.magenta;
+        outline.enabled = false;
+        outline.OutlineMode = Outline.Mode.OutlineVisible;
+        outline.OutlineWidth = 3.0f;
 
         setPosition();
     }
@@ -30,4 +38,7 @@ public class Figure : MonoBehaviour
         transform.position = _chessboardScript.getChessboard()[_x, _z].position;
     }
 
+    public FigureColor Type { get; private set; }
+
 }
+public enum FigureColor { WHITE, BLACK };
