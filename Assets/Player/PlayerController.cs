@@ -13,13 +13,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private LayerMask figureLayerMask;
 
-    private InputAction action;
+    [SerializeField] private FigureColor playerColor;
+
+    private InputAction rotateAction;
+    private InputAction clickAction;
 
     private GameObject _focusItem;
 
     void Start()
     {
-        action = InputSystem.actions.FindAction("actioner");
+        rotateAction = InputSystem.actions.FindAction("rotate");
+        clickAction = InputSystem.actions.FindAction("click");
 
 
     }
@@ -29,15 +33,21 @@ public class PlayerController : MonoBehaviour
     {
 
 
-        if (action.WasPressedThisFrame())
+        if (rotateAction.WasPressedThisFrame())
         {
-            Vector2 cameraInputRotation = action.ReadValue<Vector2>();
+            Vector2 cameraInputRotation = rotateAction.ReadValue<Vector2>();
 
             cameraCenterObject.Rotate(0.0f, 0.2f * cameraInputRotation.x, 0.0f, Space.World);
             cameraCenterObject.Rotate(-0.2f * cameraInputRotation.y, 0.0f, 0.0f);
 
         }
-        else checkOutline();
+        else
+        {
+            checkOutline();
+
+            if (clickAction.WasPerformedThisFrame() && _focusItem != null)
+                _focusItem.GetComponent<Figure>().select();
+        }
 
 
 
@@ -49,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
         if (_focusItem == null)
         {
-            if (newGameObject != null)
+            if (newGameObject != null && newGameObject.GetComponent<Figure>().Type == playerColor)
             {
                 onFigureFocus(newGameObject);
                 _focusItem = newGameObject;
@@ -59,7 +69,7 @@ public class PlayerController : MonoBehaviour
         {
             onFigureUnfocus(_focusItem);
             
-            if (newGameObject == null)
+            if (newGameObject == null || newGameObject.GetComponent<Figure>().Type != playerColor)
             {
                 _focusItem = null;
             }

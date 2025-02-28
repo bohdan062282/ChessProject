@@ -6,13 +6,22 @@
             "id": "df70fa95-8a34-4494-b137-73ab6b9c7d37",
             "actions": [
                 {
-                    "name": "actioner",
+                    "name": "rotate",
                     "type": "Value",
                     "id": "e9b263fd-28ec-4d4f-9952-6559e31aa401",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "click",
+                    "type": "Button",
+                    "id": "9bf74b1e-0e35-4163-ba30-f20a4aab9b49",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -23,7 +32,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "actioner",
+                    "action": "rotate",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -34,7 +43,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "actioner",
+                    "action": "rotate",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -45,9 +54,20 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "actioner",
+                    "action": "rotate",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "529b8a07-fdd5-4c53-9ebc-ec1811621233",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

@@ -33,6 +33,14 @@ public class Figure : MonoBehaviour
 
         setPosition();
     }
+    public void select()
+    {
+        _chessboardScript.selectFigure(this);
+
+        Vector3 pos = transform.position;
+        transform.position = new Vector3(pos.x, pos.y + 0.5f, pos.z);
+
+    }
     private void setPosition()
     {
         transform.position = _chessboardScript.getChessboard()[_x, _z].position;
