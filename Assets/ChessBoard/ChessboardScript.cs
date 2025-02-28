@@ -7,6 +7,8 @@ public class ChessboardScript : MonoBehaviour
 
     [SerializeField] private GameObject highlightFieldPrefab;
 
+    [SerializeField] private HighlightersPool highlighters;
+
 
     private (Figure figure, Vector3 position)[,] _chessboard;
     private Figure _selectedFigure;
@@ -19,6 +21,8 @@ public class ChessboardScript : MonoBehaviour
 
         chessboardGenerator.InitializeFigures(this, ChessboardGenerator.BASIC_LAYOUT);
 
+        highlighters.Initialize();
+
     }
     void Update()
     {
@@ -26,7 +30,28 @@ public class ChessboardScript : MonoBehaviour
     }
     public void selectFigure(Figure figure)
     {
+        if (_selectedFigure != null) unselectFigure();
+
         _selectedFigure = figure;
+
+
+        (int X, int Z)[] legalMoves = _selectedFigure.getLegalMoves();
+
+        Vector3[] legalPositions = new Vector3[legalMoves.Length]; 
+
+        for (int i = 0; i < legalMoves.Length; i++)
+        {
+            legalPositions[i] = _chessboard[legalMoves[i].X, legalMoves[i].Z].position;
+        }
+
+        highlighters.setPool(legalPositions);
+
+    }
+    public void unselectFigure()
+    {
+        _selectedFigure.unselect();
+
+        highlighters.disablePool();
     }
    
     public (Figure figure, Vector3 position)[,] getChessboard() => _chessboard;

@@ -41,6 +41,16 @@ public class Figure : MonoBehaviour
         transform.position = new Vector3(pos.x, pos.y + 0.5f, pos.z);
 
     }
+    public void unselect()
+    {
+        Vector3 pos = transform.position;
+        transform.position = new Vector3(pos.x, pos.y - 0.5f, pos.z);
+    }
+    public virtual (int X, int Z)[] getLegalMoves()
+    {
+
+        return new [] { (0, 0), (1, 0) };
+    }
     private void setPosition()
     {
         transform.position = _chessboardScript.getChessboard()[_x, _z].position;

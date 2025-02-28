@@ -13,4 +13,9 @@ public class Pawn : Figure
     {
         
     }
+    public override (int X, int Z)[] getLegalMoves()
+    {
+
+        return new[] { (3, 4), (3, 5) };
+    }
 }

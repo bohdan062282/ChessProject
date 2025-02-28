@@ -15,8 +15,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private FigureColor playerColor;
 
+    [SerializeReference] private ChessboardScript chessboardScript;
+
     private InputAction rotateAction;
     private InputAction clickAction;
+    private InputAction escapeAction;
 
     private GameObject _focusItem;
 
@@ -24,6 +27,7 @@ public class PlayerController : MonoBehaviour
     {
         rotateAction = InputSystem.actions.FindAction("rotate");
         clickAction = InputSystem.actions.FindAction("click");
+        escapeAction = InputSystem.actions.FindAction("escape");
 
 
     }
@@ -47,6 +51,8 @@ public class PlayerController : MonoBehaviour
 
             if (clickAction.WasPerformedThisFrame() && _focusItem != null)
                 _focusItem.GetComponent<Figure>().select();
+            else if (escapeAction.WasPerformedThisFrame()) chessboardScript.unselectFigure();
+                
         }
 
 
