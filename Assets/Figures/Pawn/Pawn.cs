@@ -1,21 +1,34 @@
+using System;
 using UnityEngine;
 
 public class Pawn : Figure
 {
     
+    private bool _isPawnFirstTurn;
+
     void Start()
     {
-        
+
+        _isPawnFirstTurn = false;
+
+
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
-    public override (int X, int Z)[] getLegalMoves()
+    public override FigureMoves getLegalMoves()
     {
+        FigureMoves figureMoves = new FigureMoves();
+        figureMoves.AttackMoves = new (int X, int Z)[0];
 
-        return new[] { (3, 4), (3, 5) };
+        if (_z + 1 < 8 && _chessboardScript.getChessboard()[_x, _z + 1].figure == null)
+        {
+            figureMoves.LegalMoves = new (int X, int Z)[1] { (_x, _z + 1) };
+        }
+        else figureMoves.LegalMoves = new (int X, int Z)[0];
+
+        return figureMoves;
     }
 }

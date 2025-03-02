@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class Figure : MonoBehaviour
 {
-    private ChessboardScript _chessboardScript;
-    private int _x;
-    private int _z;
+    protected ChessboardScript _chessboardScript;
+    protected int _x;
+    protected int _z;
 
 
     void Start()
@@ -46,10 +46,11 @@ public class Figure : MonoBehaviour
         Vector3 pos = transform.position;
         transform.position = new Vector3(pos.x, pos.y - 0.5f, pos.z);
     }
-    public virtual (int X, int Z)[] getLegalMoves()
+    public virtual FigureMoves getLegalMoves()
     {
 
-        return new [] { (0, 0), (1, 0) };
+        return new FigureMoves(  new (int X, int Z)[] { (3, 4), (4, 4) },
+                                 new (int X, int Z)[] { (3, 5) });
     }
     private void setPosition()
     {
