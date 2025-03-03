@@ -33,14 +33,14 @@ public class ChessboardScript : MonoBehaviour
     }
     public bool checkPosition(int x, int z, FigureColor figureColor)
     {
-        if (_chessboard[x, z].figure != null)
-        {
-            if (_chessboard[x, z].figure.Type != figureColor)
-                return true;
-            else return false;
-        }
+        if (_chessboard[x, z].figure != null) return checkFigureColor(x, z, figureColor);
         else return false;
-        
+    }
+    public bool checkFigureColor(int x, int z, FigureColor figureColor)
+    {
+        if (_chessboard[x, z].figure.Type != figureColor)
+            return true;
+        else return false;
     }
     public void selectFigure(Figure figure)
     {
