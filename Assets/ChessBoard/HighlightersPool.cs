@@ -4,36 +4,58 @@ using System;
 [Serializable]
 public class HighlightersPool
 {
-    [SerializeField] private GameObject highlighterPrefab;
+    [SerializeField] private GameObject legalHighlighterPrefab;
+    [SerializeField] private GameObject attackHighlighterPrefab;
 
-    private GameObject[] _pool;
+    private GameObject[] _pool1;
+    private GameObject[] _pool2;
 
     public void Initialize()
     {
-        _pool = new GameObject[30];
+        _pool1 = new GameObject[30];
+        _pool2 = new GameObject[30];
 
         for (int i = 0; i < 30; i++)
         {
-            _pool[i] = GameObject.Instantiate(highlighterPrefab);
-            _pool[i].SetActive(false);
+            _pool1[i] = GameObject.Instantiate(legalHighlighterPrefab);
+            _pool1[i].SetActive(false);
+
+            _pool2[i] = GameObject.Instantiate(attackHighlighterPrefab);
+            _pool2[i].SetActive(false);
         }
     }
-    public void setPool(Vector3[] positions)
+    public void setPoolLegal(Vector3[] positions)
     {
         for (int i = 0; i < positions.Length; i++)
         {
-            _pool[i].SetActive(true);
-            _pool[i].transform.position = positions[i];
+            _pool1[i].SetActive(true);
+            _pool1[i].transform.position = positions[i];
         }
     }
-    public void disablePool()
+    public void setPoolAttack(Vector3[] positions)
+    {
+        for (int i = 0; i < positions.Length; i++)
+        {
+            _pool2[i].SetActive(true);
+            _pool2[i].transform.position = positions[i];
+        }
+    }
+    public void disablePoolLegal()
     {
         for (int i = 0; i < 30; i++)
         {
-            if (_pool[i].active) _pool[i].SetActive(false);
+            if (_pool1[i].active) _pool1[i].SetActive(false);
+            else return;
+        }
+    }
+    public void disablePoolAttack()
+    {
+        for (int i = 0; i < 30; i++)
+        {
+            if (_pool2[i].active) _pool2[i].SetActive(false);
             else return;
         }
     }
 
-    
+
 }

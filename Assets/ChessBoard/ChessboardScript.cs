@@ -5,8 +5,6 @@ public class ChessboardScript : MonoBehaviour
 {
     [SerializeField] private ChessboardGenerator chessboardGenerator;
 
-    [SerializeField] private GameObject highlightFieldPrefab;
-
     [SerializeField] private HighlightersPool highlighters;
 
 
@@ -28,6 +26,22 @@ public class ChessboardScript : MonoBehaviour
     {
         
     }
+    public bool checkPosition(int x, int z)
+    {
+        if (_chessboard[x, z].figure == null) return false;
+        else return true;
+    }
+    public bool checkPosition(int x, int z, FigureColor figureColor)
+    {
+        if (_chessboard[x, z].figure != null)
+        {
+            if (_chessboard[x, z].figure.Type != figureColor)
+                return true;
+            else return false;
+        }
+        else return false;
+        
+    }
     public void selectFigure(Figure figure)
     {
         if (_selectedFigure != null) unselectFigure();
@@ -35,16 +49,19 @@ public class ChessboardScript : MonoBehaviour
         _selectedFigure = figure;
 
 
-        FigureMoves figureMoves = _selectedFigure.getLegalMoves();
+        FigureMoves figureMoves = _selectedFigure.getMoves();
 
-        Vector3[] legalPositions = new Vector3[figureMoves.LegalMoves.Length]; 
+        Vector3[] legalPositions = new Vector3[figureMoves.LegalMoves.Count];
+        Vector3[] attackPositions = new Vector3[figureMoves.AttackMoves.Count];
 
-        for (int i = 0; i < figureMoves.LegalMoves.Length; i++)
-        {
+        for (int i = 0; i < figureMoves.LegalMoves.Count; i++)
             legalPositions[i] = _chessboard[figureMoves.LegalMoves[i].X, figureMoves.LegalMoves[i].Z].position;
-        }
 
-        highlighters.setPool(legalPositions);
+        for (int i = 0; i < figureMoves.AttackMoves.Count; i++)
+            attackPositions[i] = _chessboard[figureMoves.AttackMoves[i].X, figureMoves.AttackMoves[i].Z].position;
+
+        highlighters.setPoolLegal(legalPositions);
+        highlighters.setPoolAttack(attackPositions);
 
     }
     public void unselectFigure()
@@ -55,7 +72,8 @@ public class ChessboardScript : MonoBehaviour
 
             _selectedFigure = null;
 
-            highlighters.disablePool();
+            highlighters.disablePoolLegal();
+            highlighters.disablePoolAttack();
         }
     }
    

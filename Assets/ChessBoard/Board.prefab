@@ -117,6 +117,6 @@ MonoBehaviour:
     - {fileID: 1672242659374470, guid: f005021ceced8b240983e71a3d481180, type: 3}
     - {fileID: 1471985601831630, guid: 664a4dc6e997f5f47a9233db911328ac, type: 3}
     - {fileID: 1810274083847610, guid: 309659d4eb727d74d91c4875a85edc00, type: 3}
-  highlightFieldPrefab: {fileID: 733841556425421282, guid: a289b2ba5699ced498560ec6d3a3d57a, type: 3}
   highlighters:
-    highlighterPrefab: {fileID: 733841556425421282, guid: a289b2ba5699ced498560ec6d3a3d57a, type: 3}
+    legalHighlighterPrefab: {fileID: 733841556425421282, guid: a289b2ba5699ced498560ec6d3a3d57a, type: 3}
+    attackHighlighterPrefab: {fileID: 733841556425421282, guid: 682c7ce92bd55834fa6ca2f74da97e2a, type: 3}

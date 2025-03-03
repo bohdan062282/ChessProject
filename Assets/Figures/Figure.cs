@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Figure : MonoBehaviour
@@ -46,11 +47,11 @@ public class Figure : MonoBehaviour
         Vector3 pos = transform.position;
         transform.position = new Vector3(pos.x, pos.y - 0.5f, pos.z);
     }
-    public virtual FigureMoves getLegalMoves()
+    public virtual FigureMoves getMoves()
     {
 
-        return new FigureMoves(  new (int X, int Z)[] { (3, 4), (4, 4) },
-                                 new (int X, int Z)[] { (3, 5) });
+        return new FigureMoves(  new List<(int X, int Z)> { (3, 4), (4, 4) },
+                                 new List<(int X, int Z)> { (3, 5) });
     }
     private void setPosition()
     {

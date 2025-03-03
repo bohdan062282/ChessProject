@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Pawn : Figure
@@ -9,7 +10,7 @@ public class Pawn : Figure
     void Start()
     {
 
-        _isPawnFirstTurn = false;
+        _isPawnFirstTurn = true;
 
 
     }
@@ -18,16 +19,32 @@ public class Pawn : Figure
     {
         
     }
-    public override FigureMoves getLegalMoves()
+    public override FigureMoves getMoves()
     {
-        FigureMoves figureMoves = new FigureMoves();
-        figureMoves.AttackMoves = new (int X, int Z)[0];
+        FigureMoves figureMoves = new FigureMoves(  new List<(int X, int Z)> { },
+                                                    new List<(int X, int Z)> { }    );
 
-        if (_z + 1 < 8 && _chessboardScript.getChessboard()[_x, _z + 1].figure == null)
+        int zPlus = _z + 1;
+        int xMinus = _x - 1;
+        int xPlus = _x + 1;
+
+        if (zPlus < 8)
         {
-            figureMoves.LegalMoves = new (int X, int Z)[1] { (_x, _z + 1) };
+            if (!_chessboardScript.checkPosition(_x, zPlus))
+                figureMoves.LegalMoves.Add((_x, zPlus));
+
+            if (xMinus > -1 && _chessboardScript.checkPosition(xMinus, zPlus, this.Type))
+                figureMoves.AttackMoves.Add((xMinus, zPlus));
+
+            if (xPlus < 8 && _chessboardScript.checkPosition(xPlus, zPlus, this.Type))
+                figureMoves.AttackMoves.Add((xPlus, zPlus));
+
         }
-        else figureMoves.LegalMoves = new (int X, int Z)[0];
+        zPlus++;
+        if (_isPawnFirstTurn && zPlus < 8)
+            if (    !_chessboardScript.checkPosition(_x, zPlus) &&
+                    !_chessboardScript.checkPosition(_x, zPlus-1))
+                figureMoves.LegalMoves.Add((_x, zPlus));
 
         return figureMoves;
     }
