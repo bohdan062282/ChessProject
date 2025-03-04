@@ -19,26 +19,57 @@ public class Knight : Figure
         FigureMoves figureMoves = new FigureMoves(new List<(int X, int Z)> { },
                                                     new List<(int X, int Z)> { });
 
-        if (_chessboardScript.checkPosition(_x+1, _z+2))
-            if(_chessboardScript.checkFigureColor(_x+1, _z+2, Type))
-                figureMoves.AttackMoves.Add((_x+1, _z+2));
-        else figureMoves.LegalMoves.Add((_x+1, _z+2));
+        int x = _x + 1;
+        int z = _z + 2;
 
-        if (_chessboardScript.checkPosition(_x + 2, _z - 1))
-            if (_chessboardScript.checkFigureColor(_x + 2, _z - 1, Type))
-                figureMoves.AttackMoves.Add((_x + 2, _z - 1));
-            else figureMoves.LegalMoves.Add((_x + 2, _z - 1));
-
-        if (_chessboardScript.checkPosition(_x - 1, _z - 2))
-            if (_chessboardScript.checkFigureColor(_x - 1, _z - 2, Type))
-                figureMoves.AttackMoves.Add((_x - 1, _z - 2));
-            else figureMoves.LegalMoves.Add((_x - 1, _z - 2));
-
-        if (_chessboardScript.checkPosition(_x - 2, _z + 1))
-            if (_chessboardScript.checkFigureColor(_x - 2, _z + 1, Type))
-                figureMoves.AttackMoves.Add((_x - 2, _z + 1));
-            else figureMoves.LegalMoves.Add((_x - 2, _z + 1));
+        if (z < 8)
+        {
+            if (x < 8)
+                setGMove(figureMoves, x, z);
+            x -= 2;
+            if (x > -1)
+                setGMove(figureMoves, x, z);
+        }
+        x = _x + 2;
+        z = _z + 1;
+        if (x < 8)
+        {
+            if (z < 8)
+                setGMove(figureMoves, x, z);
+            z -= 2;
+            if (z > -1)
+                setGMove(figureMoves, x, z);
+        }
+        x = _x + 1;
+        z = _z - 2;
+        if (z > -1)
+        {
+            if (x < 8)
+                setGMove(figureMoves, x, z);
+            x -= 2;
+            if (x > -1)
+                setGMove(figureMoves, x, z);
+        }
+        x = _x - 2;
+        z = _z + 1;
+        if (x > -1)
+        {
+            if (z < 8)
+                setGMove(figureMoves, x, z);
+            z -= 2;
+            if (z > -1)
+                setGMove(figureMoves, x, z);
+        }
 
         return figureMoves;
+    }
+    private void setGMove(FigureMoves figureMoves, int x, int z)
+    {
+        if (_chessboardScript.checkPosition(x, z))
+        {
+            if (_chessboardScript.checkFigureColor(x, z, Type))
+                figureMoves.AttackMoves.Add((x, z));
+        }
+        else figureMoves.LegalMoves.Add((x, z));
     }
 }

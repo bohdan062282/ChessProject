@@ -13,12 +13,12 @@ public class ChessboardGenerator
     [SerializeField] private GameObject[] figurePrefabs;
 
 
-    public static readonly int[,] BASIC_LAYOUT = new int[,] {   { 2, 0, 0, 0 ,0 ,0 ,7 ,8 },
-                                                                { 3, 1, 0, 0 ,0 ,0 ,7 ,9 },
-                                                                { 4, 1, 0, 0 ,2 ,0 ,7 ,10 },
-                                                                { 5, 1, 7, 0 ,0 ,0 ,7 ,11 },
+    public static readonly int[,] BASIC_LAYOUT = new int[,] {   { 2, 1, 0, 0 ,0 ,0 ,7 ,8 },
+                                                                { 3, 1, 0, 0 ,6 ,0 ,7 ,9 },
+                                                                { 4, 1, 0, 0 ,0 ,0 ,7 ,10 },
+                                                                { 5, 1, 0, 0 ,3 ,0 ,7 ,11 },
                                                                 { 6, 1, 0, 0 ,0 ,0 ,7 ,12 },
-                                                                { 4, 1, 0, 4 ,0 ,0 ,7 ,10 },
+                                                                { 4, 1, 0, 5 ,1 ,0 ,7 ,10 },
                                                                 { 3, 1, 0, 0 ,0 ,0 ,7 ,9 },
                                                                 { 2, 1, 0, 0 ,0 ,0 ,7 ,8 }};
 
