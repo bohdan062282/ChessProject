@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Camera mainCamera;
     [SerializeField] private LayerMask figureLayerMask;
+    [SerializeField] private LayerMask highlighterLayerMask;
 
     [SerializeField] private FigureColor playerColor;
 
@@ -21,7 +22,8 @@ public class PlayerController : MonoBehaviour
     private InputAction clickAction;
     private InputAction escapeAction;
 
-    private GameObject _focusItem;
+    private IFocusable _focusItem;
+    private IFocusable _focusField;
 
     void Start()
     {
@@ -47,62 +49,63 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            checkOutline();
+            _focusField = setFocusable(_focusField, highlighterLayerMask);
 
-            if (clickAction.WasPerformedThisFrame() && _focusItem != null)
-                _focusItem.GetComponent<Figure>().select();
+            _focusItem = setFocusable(_focusItem, figureLayerMask);
+            Figure selectedFigure = _focusItem as Figure;
+
+            if (clickAction.WasPerformedThisFrame())
+            {
+                if (_focusItem != null)
+                    selectedFigure.select();
+                //else if (_focusField != null)
+                //    _focusField
+            }
             else if (escapeAction.WasPerformedThisFrame()) chessboardScript.unselectFigure();
-                
+
         }
 
 
 
     }
-
-    private void checkOutline()
+    private IFocusable setFocusable(IFocusable currentObject, int layerMask)
     {
-        GameObject newGameObject = getFocusFigure();
+        GameObject focusObj = getFocusObject(layerMask);
+        IFocusable newGameObject = focusObj == null ? null : focusObj.GetComponent<IFocusable>();
+        IFocusable gameObject = null;
 
-        if (_focusItem == null)
+        if (currentObject == null)
         {
-            if (newGameObject != null && newGameObject.GetComponent<Figure>().Type == playerColor)
+            if (newGameObject != null)
             {
-                onFigureFocus(newGameObject);
-                _focusItem = newGameObject;
+                newGameObject.onFocusEnter();
+                gameObject = newGameObject;
             }
         }
-        else if (newGameObject != _focusItem)
+        else if (newGameObject != currentObject)
         {
-            onFigureUnfocus(_focusItem);
-            
-            if (newGameObject == null || newGameObject.GetComponent<Figure>().Type != playerColor)
-            {
-                _focusItem = null;
-            }
+            currentObject.onFocusExit();
+
+            if (newGameObject == null) gameObject = null;
             else
             {
-                onFigureFocus(newGameObject);
-                _focusItem = newGameObject;
+                newGameObject.onFocusEnter();
+                gameObject = newGameObject;
             }
-            
         }
+        else gameObject = currentObject;
+
+        return gameObject;
     }
-    private GameObject getFocusFigure()
+    private GameObject getFocusObject(int layerMask)
     {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, figureLayerMask))
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             return hit.collider.gameObject;
         else return null;
 
     }
-    private void onFigureFocus(GameObject go)
-    {
-        go.GetComponent<Outline>().enabled = true;
-    }
-    private void onFigureUnfocus(GameObject go)
-    {
-        go.GetComponent<Outline>().enabled = false;
-    }
+
 }

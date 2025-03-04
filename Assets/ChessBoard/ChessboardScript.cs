@@ -48,21 +48,26 @@ public class ChessboardScript : MonoBehaviour
 
         _selectedFigure = figure;
 
-
         FigureMoves figureMoves = _selectedFigure.getMoves();
 
-        Vector3[] legalPositions = new Vector3[figureMoves.LegalMoves.Count];
-        Vector3[] attackPositions = new Vector3[figureMoves.AttackMoves.Count];
+        highlighters.setPoolLegal(figureMoves.LegalMoves, this);
+        highlighters.setPoolAttack(figureMoves.AttackMoves, this);
 
-        for (int i = 0; i < figureMoves.LegalMoves.Count; i++)
-            legalPositions[i] = _chessboard[figureMoves.LegalMoves[i].X, figureMoves.LegalMoves[i].Z].position;
+    }
+    public void moveTo(int x, int z)
+    {
+        if (_selectedFigure != null)
+        {
+            Figure figure = _selectedFigure;
 
-        for (int i = 0; i < figureMoves.AttackMoves.Count; i++)
-            attackPositions[i] = _chessboard[figureMoves.AttackMoves[i].X, figureMoves.AttackMoves[i].Z].position;
+            _chessboard[x, z].figure.rip();
+            _chessboard[x, z].figure = figure;
 
-        highlighters.setPoolLegal(legalPositions);
-        highlighters.setPoolAttack(attackPositions);
+            unselectFigure();
 
+            figure.setPosition(x, z);
+            figure.setTransformPosition();
+        }
     }
     public void unselectFigure()
     {

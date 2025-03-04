@@ -742,6 +742,9 @@ MonoBehaviour:
   figureLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  highlighterLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   playerColor: 0
   chessboardScript: {fileID: 143192923}
 --- !u!4 &1762643682

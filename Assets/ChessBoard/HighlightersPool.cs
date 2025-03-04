@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class HighlightersPool
@@ -19,25 +20,31 @@ public class HighlightersPool
         {
             _pool1[i] = GameObject.Instantiate(legalHighlighterPrefab);
             _pool1[i].SetActive(false);
-
+             
             _pool2[i] = GameObject.Instantiate(attackHighlighterPrefab);
             _pool2[i].SetActive(false);
         }
     }
-    public void setPoolLegal(Vector3[] positions)
+    public void setPoolLegal(List<(int X, int Z)> moves, ChessboardScript chessboardScript)
     {
-        for (int i = 0; i < positions.Length; i++)
+        for (int i = 0; i < moves.Count; i++)
         {
             _pool1[i].SetActive(true);
-            _pool1[i].transform.position = positions[i];
+            (Figure figure, Vector3 position) field = chessboardScript.getChessboard()[moves[i].X, moves[i].Z];
+            _pool1[i].transform.position = field.position;
+            _pool1[i].GetComponent<HighlighterScript>().X = moves[i].X;
+            _pool1[i].GetComponent<HighlighterScript>().Z = moves[i].Z;
         }
     }
-    public void setPoolAttack(Vector3[] positions)
+    public void setPoolAttack(List<(int X, int Z)> moves, ChessboardScript chessboardScript)
     {
-        for (int i = 0; i < positions.Length; i++)
+        for (int i = 0; i < moves.Count; i++)
         {
             _pool2[i].SetActive(true);
-            _pool2[i].transform.position = positions[i];
+            (Figure figure, Vector3 position) field = chessboardScript.getChessboard()[moves[i].X, moves[i].Z];
+            _pool2[i].transform.position = field.position;
+            _pool2[i].GetComponent<HighlighterScript>().X = moves[i].X;
+            _pool2[i].GetComponent<HighlighterScript>().Z = moves[i].Z;
         }
     }
     public void disablePoolLegal()
