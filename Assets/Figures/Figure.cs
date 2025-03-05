@@ -57,7 +57,7 @@ public class Figure : MonoBehaviour, IFocusable
         return new FigureMoves(new List<(int X, int Z)> { (3, 4), (4, 4) },
                                  new List<(int X, int Z)> { (3, 5) });
     }
-    public void setPosition(int x, int z)
+    public void setCoord(int x, int z)
     {
         _x = x; _z = z;
     }
@@ -75,6 +75,8 @@ public class Figure : MonoBehaviour, IFocusable
     }
 
     public FigureColor Type { get; private set; }
+    public int X { get => _x; }
+    public int Z { get => _z; }
 
 }
 public enum FigureColor { WHITE, BLACK };

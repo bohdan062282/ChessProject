@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 182814247956002306}
   - component: {fileID: 8194056848124269220}
   - component: {fileID: 7610698530797801238}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: AttackFieldHighlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,6 +68,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Renderer: {fileID: 2269672226152271925}
+  X: 0
+  Z: 0
 --- !u!1 &5332609962006523472
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,16 +50,17 @@ public class PlayerController : MonoBehaviour
         else
         {
             _focusField = setFocusable(_focusField, highlighterLayerMask);
+            HighlighterScript highlighter = _focusField as HighlighterScript;
 
             _focusItem = setFocusable(_focusItem, figureLayerMask);
             Figure selectedFigure = _focusItem as Figure;
 
             if (clickAction.WasPerformedThisFrame())
             {
-                if (_focusItem != null)
+                if (_focusField != null)
+                    highlighter.select();
+                else if (_focusItem != null)
                     selectedFigure.select();
-                //else if (_focusField != null)
-                //    _focusField
             }
             else if (escapeAction.WasPerformedThisFrame()) chessboardScript.unselectFigure();
 
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour
         IFocusable newGameObject = focusObj == null ? null : focusObj.GetComponent<IFocusable>();
         IFocusable gameObject = null;
 
-        if (currentObject == null)
+        if (currentObject == null || currentObject as Object == null)
         {
             if (newGameObject != null)
             {

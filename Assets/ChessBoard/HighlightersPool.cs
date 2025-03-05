@@ -11,7 +11,7 @@ public class HighlightersPool
     private GameObject[] _pool1;
     private GameObject[] _pool2;
 
-    public void Initialize()
+    public void Initialize(ChessboardScript chessboardScript)
     {
         _pool1 = new GameObject[30];
         _pool2 = new GameObject[30];
@@ -19,9 +19,11 @@ public class HighlightersPool
         for (int i = 0; i < 30; i++)
         {
             _pool1[i] = GameObject.Instantiate(legalHighlighterPrefab);
+            _pool1[i].GetComponent<HighlighterScript>().Initialize(chessboardScript);
             _pool1[i].SetActive(false);
              
             _pool2[i] = GameObject.Instantiate(attackHighlighterPrefab);
+            _pool2[i].GetComponent<HighlighterScript>().Initialize(chessboardScript);
             _pool2[i].SetActive(false);
         }
     }

@@ -9,6 +9,7 @@ public class HighlighterScript : MonoBehaviour, IFocusable
     [HideInInspector] public int Z;
 
     private Color _color;
+    private ChessboardScript _chessboard;
 
     void Start()
     {
@@ -22,7 +23,10 @@ public class HighlighterScript : MonoBehaviour, IFocusable
     {
         
     }
-
+    public void Initialize(ChessboardScript chessboardScript)
+    {
+        _chessboard = chessboardScript;
+    }
     public void onFocusEnter()
     {
         m_Renderer.material.color = new Color(_color.r + 0.2f, _color.g + 0.2f, _color.b + 0.2f, _color.a);
@@ -33,6 +37,6 @@ public class HighlighterScript : MonoBehaviour, IFocusable
     }
     public void select()
     {
-
+        _chessboard.moveTo(X, Z);
     }
 }

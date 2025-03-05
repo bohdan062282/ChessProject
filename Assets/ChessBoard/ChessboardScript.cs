@@ -19,7 +19,7 @@ public class ChessboardScript : MonoBehaviour
 
         chessboardGenerator.InitializeFigures(this, ChessboardGenerator.BASIC_LAYOUT);
 
-        highlighters.Initialize();
+        highlighters.Initialize(this);
 
     }
     void Update()
@@ -60,12 +60,16 @@ public class ChessboardScript : MonoBehaviour
         {
             Figure figure = _selectedFigure;
 
-            _chessboard[x, z].figure.rip();
+            _chessboard[figure.X, figure.Z].figure = null;
+
+            if (_chessboard[x, z].figure != null)
+                _chessboard[x, z].figure.rip();
+
             _chessboard[x, z].figure = figure;
 
             unselectFigure();
 
-            figure.setPosition(x, z);
+            figure.setCoord(x, z);
             figure.setTransformPosition();
         }
     }
