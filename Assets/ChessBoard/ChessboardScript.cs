@@ -72,6 +72,7 @@ public class ChessboardScript : MonoBehaviour
             if (newFigure != null)
             {
                 figure.rip();
+                _chessboard[x, z].figure = newFigure;
             }
             else
             {
@@ -98,7 +99,6 @@ public class ChessboardScript : MonoBehaviour
     {
         if (figure is Pawn)
         {
-            Debug.Log(z.ToString() + " " + figure.Type);
             Pawn pawn = _selectedFigure as Pawn;
             if (z == 7 && figure.Type == FigureColor.WHITE)
                 return ChessboardGenerator.InstantiateFigure(this, chessboardGenerator.figurePrefabs[5], FigureColor.WHITE, x, z);

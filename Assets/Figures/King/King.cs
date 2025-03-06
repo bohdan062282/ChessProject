@@ -40,5 +40,9 @@ public class King : Figure
 
         return figureMoves;
     }
+    private void checkKingDanger(int x, int z)
+    {
+
+    }
     private bool checkBounds(int x, int z) => x < 8 && x > -1 && z < 8 && z > -1;
 }

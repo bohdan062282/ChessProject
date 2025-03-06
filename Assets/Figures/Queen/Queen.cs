@@ -16,6 +16,10 @@ public class Queen : Figure
     }
     public override FigureMoves getMoves()
     {
+        return Queen.getQueenTypeMoves(_chessboardScript, _x, _z, Type);
+    }
+    public static FigureMoves getQueenTypeMoves(ChessboardScript chessboardScript, int xParam, int zParam, FigureColor figureColor)
+    {
         FigureMoves figureMoves = new FigureMoves(new List<(int X, int Z)> { },
                                                     new List<(int X, int Z)> { });
 
@@ -26,15 +30,14 @@ public class Queen : Figure
                 if (x == 0 && z == 0)
                     z = 1;
 
-                int xPos = _x + x;
-                int zPos = _z + z;
+                int xPos = xParam + x;
+                int zPos = zParam + z;
 
                 for (; checkBounds(xPos, zPos); xPos += x, zPos += z)
                 {
-                    
-                    if (_chessboardScript.checkPosition(xPos, zPos))
+                    if (chessboardScript.checkPosition(xPos, zPos))
                     {
-                        if (_chessboardScript.checkFigureColor(xPos, zPos, Type))
+                        if (chessboardScript.checkFigureColor(xPos, zPos, figureColor))
                             figureMoves.AttackMoves.Add((xPos, zPos));
                         break;
                     }
@@ -45,5 +48,5 @@ public class Queen : Figure
 
         return figureMoves;
     }
-    private bool checkBounds(int x, int z) => x < 8 && x > -1 && z < 8 && z > -1;
+    private static bool checkBounds(int x, int z) => x < 8 && x > -1 && z < 8 && z > -1;
 }
