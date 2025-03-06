@@ -59,18 +59,27 @@ public class ChessboardScript : MonoBehaviour
         if (_selectedFigure != null)
         {
             Figure figure = _selectedFigure;
+            figure.move();
 
             _chessboard[figure.X, figure.Z].figure = null;
 
             if (_chessboard[x, z].figure != null)
                 _chessboard[x, z].figure.rip();
 
-            _chessboard[x, z].figure = figure;
-
             unselectFigure();
 
-            figure.setCoord(x, z);
-            figure.setTransformPosition();
+            Figure newFigure = checkPawnMove(figure, x, z);
+            if (newFigure != null)
+            {
+                figure.rip();
+            }
+            else
+            {
+                _chessboard[x, z].figure = figure;
+                figure.setCoord(x, z);
+                figure.setTransformPosition();
+            }
+            
         }
     }
     public void unselectFigure()
@@ -84,6 +93,20 @@ public class ChessboardScript : MonoBehaviour
             highlighters.disablePoolLegal();
             highlighters.disablePoolAttack();
         }
+    }
+    private Figure checkPawnMove(Figure figure, int x, int z)
+    {
+        if (figure is Pawn)
+        {
+            Debug.Log(z.ToString() + " " + figure.Type);
+            Pawn pawn = _selectedFigure as Pawn;
+            if (z == 7 && figure.Type == FigureColor.WHITE)
+                return ChessboardGenerator.InstantiateFigure(this, chessboardGenerator.figurePrefabs[5], FigureColor.WHITE, x, z);
+            else if (z == 0 && figure.Type == FigureColor.BLACK)
+                return ChessboardGenerator.InstantiateFigure(this, chessboardGenerator.figurePrefabs[11], FigureColor.BLACK, x, z);
+            else return null;
+        }
+        else return null;
     }
    
     public (Figure figure, Vector3 position)[,] getChessboard() => _chessboard;

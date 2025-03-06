@@ -18,7 +18,7 @@ public class Figure : MonoBehaviour, IFocusable
     {
 
     }
-    public void Initialize(ChessboardScript chessboardScript, int x, int z, FigureColor type)
+    public virtual void Initialize(ChessboardScript chessboardScript, int x, int z, FigureColor type)
     {
         _chessboardScript = chessboardScript;
         _x = x;
@@ -56,6 +56,10 @@ public class Figure : MonoBehaviour, IFocusable
 
         return new FigureMoves(new List<(int X, int Z)> { (3, 4), (4, 4) },
                                  new List<(int X, int Z)> { (3, 5) });
+    }
+    public virtual void move()
+    {
+        
     }
     public void setCoord(int x, int z)
     {

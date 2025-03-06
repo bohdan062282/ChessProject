@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -330108576786370875}
   - component: {fileID: 4866645989008137691}
   - component: {fileID: 5522359556372204369}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: KingLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

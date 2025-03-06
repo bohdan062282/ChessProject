@@ -57,9 +57,9 @@ public class PlayerController : MonoBehaviour
 
             if (clickAction.WasPerformedThisFrame())
             {
-                if (_focusField != null)
+                if (highlighter != null)
                     highlighter.select();
-                else if (_focusItem != null)
+                else if (selectedFigure != null)
                     selectedFigure.select();
             }
             else if (escapeAction.WasPerformedThisFrame()) chessboardScript.unselectFigure();

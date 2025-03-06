@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5746149194783514551}
   - component: {fileID: 7812838478182308796}
   - component: {fileID: 5862259423587975881}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: PawnLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

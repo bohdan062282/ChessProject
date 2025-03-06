@@ -10,7 +10,7 @@ public class ChessboardGenerator
     [Space(10)]
     [Header("Element 1 - need to be null")]
 
-    [SerializeField] private GameObject[] figurePrefabs;
+    [SerializeField] public GameObject[] figurePrefabs;
 
 
     public static readonly int[,] BASIC_LAYOUT = new int[,] {   { 2, 1, 0, 0 ,0 ,0 ,7 ,8 },
@@ -32,18 +32,22 @@ public class ChessboardGenerator
                 {
                     if (layout[i, j] != 0)
                     {
-                        if (layout[i, j] < 7) InstantiateFigure(chessboard, figurePrefabs[layout[i, j]], FigureColor.WHITE, i, j);
-                        else InstantiateFigure(chessboard, figurePrefabs[layout[i, j]], FigureColor.BLACK, i, j);
+                        if (layout[i, j] < 7)
+                            chessboard.getChessboard()[i, j].figure = 
+                                InstantiateFigure(chessboard, figurePrefabs[layout[i, j]], FigureColor.WHITE, i, j);
+                        else chessboard.getChessboard()[i, j].figure =
+                                InstantiateFigure(chessboard, figurePrefabs[layout[i, j]], FigureColor.BLACK, i, j);
                     }
                 }
             }
         }  
     }
-    private static void InstantiateFigure(ChessboardScript chessboard, GameObject figurePrefab, FigureColor type, int x, int z)
+    public static Figure InstantiateFigure(ChessboardScript chessboard, GameObject figurePrefab, FigureColor type, int x, int z)
     {
         GameObject gameObject = UnityEngine.GameObject.Instantiate(figurePrefab);
-        chessboard.getChessboard()[x, z].figure = gameObject.GetComponent<Figure>();
-        chessboard.getChessboard()[x, z].figure.Initialize(chessboard, x, z, type);
+        Figure figure = gameObject.GetComponent<Figure>();
+        figure.Initialize(chessboard, x, z, type);
+        return figure;
     }
     public static (Figure figure, Vector3 position)[,] generateChessboard(Transform leftBottom, Transform rightTop)
     {
