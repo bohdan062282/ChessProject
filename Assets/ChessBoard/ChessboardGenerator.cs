@@ -37,6 +37,9 @@ public class ChessboardGenerator
                                 InstantiateFigure(chessboard, figurePrefabs[layout[i, j]], FigureColor.WHITE, i, j);
                         else chessboard.getChessboard()[i, j].figure =
                                 InstantiateFigure(chessboard, figurePrefabs[layout[i, j]], FigureColor.BLACK, i, j);
+
+                        if (layout[i, j] == 6) chessboard.WhiteKing = chessboard.getChessboard()[i, j].figure;
+                        if (layout[i, j] == 12) chessboard.BlackKing = chessboard.getChessboard()[i, j].figure;
                     }
                 }
             }

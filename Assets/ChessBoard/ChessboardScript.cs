@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -80,7 +81,9 @@ public class ChessboardScript : MonoBehaviour
                 figure.setCoord(x, z);
                 figure.setTransformPosition();
             }
-            
+
+            Debug.Log(checkKingDanger(WhiteKing, 2, 4));
+
         }
     }
     public void unselectFigure()
@@ -108,7 +111,41 @@ public class ChessboardScript : MonoBehaviour
         }
         else return null;
     }
+    private bool checkKingDanger(Figure king, int x, int z)
+    {
+        Figure tmpDelFigure = _chessboard[x, z].figure;
+        _chessboard[king.X, king.Z].figure = null;
+        _chessboard[x, z].figure = king;
+
+        List<(int X, int Z)> moves;
+
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                Figure figure = _chessboard[i, j].figure;
+                if (figure != null && figure.Type != king.Type)
+                {
+                    moves = figure.getMoves().AttackMoves;
+                    if (moves.Contains((x, z)))
+                    {
+                        _chessboard[king.X, king.Z].figure = king;
+                        _chessboard[x, z].figure = tmpDelFigure;
+
+                        return true;
+                    }
+                }
+                
+            }
+        }
+        _chessboard[king.X, king.Z].figure = king;
+        _chessboard[x, z].figure = tmpDelFigure;
+
+        return false;
+    }
    
     public (Figure figure, Vector3 position)[,] getChessboard() => _chessboard;
+    public Figure WhiteKing { get; set; }
+    public Figure BlackKing { get; set; }
 
 }
