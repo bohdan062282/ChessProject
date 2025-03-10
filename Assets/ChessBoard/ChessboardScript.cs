@@ -51,6 +51,8 @@ public class ChessboardScript : MonoBehaviour
 
         FigureMoves figureMoves = _selectedFigure.getMoves();
 
+        if (figure is King) setSafeMoves(figureMoves, figure);
+
         highlighters.setPoolLegal(figureMoves.LegalMoves, this);
         highlighters.setPoolAttack(figureMoves.AttackMoves, this);
 
@@ -82,8 +84,6 @@ public class ChessboardScript : MonoBehaviour
                 figure.setTransformPosition();
             }
 
-            Debug.Log(checkKingDanger(WhiteKing, 2, 4));
-
         }
     }
     public void unselectFigure()
@@ -111,7 +111,26 @@ public class ChessboardScript : MonoBehaviour
         }
         else return null;
     }
-    private bool checkKingDanger(Figure king, int x, int z)
+    private void setSafeMoves(FigureMoves figureMoves, Figure king)
+    {
+        for (int i = 0; i < figureMoves.LegalMoves.Count; i++)
+        {
+            if (checkKingDanger(king, figureMoves.LegalMoves[i].X, figureMoves.LegalMoves[i].Z))
+            {
+                figureMoves.LegalMoves.RemoveAt(i);
+                i--;
+            }
+        } 
+        for (int i = 0; i < figureMoves.AttackMoves.Count; i++)
+        {
+            if (checkKingDanger(king, figureMoves.AttackMoves[i].X, figureMoves.AttackMoves[i].Z))
+            {
+                figureMoves.AttackMoves.RemoveAt(i);
+                i--;
+            }
+        }
+    }
+    public bool checkKingDanger(Figure king, int x, int z)
     {
         Figure tmpDelFigure = _chessboard[x, z].figure;
         _chessboard[king.X, king.Z].figure = null;

@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private InputAction rotateAction;
     private InputAction clickAction;
     private InputAction escapeAction;
+    private InputAction zoomAction;
 
     private IFocusable _focusItem;
     private IFocusable _focusField;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
         rotateAction = InputSystem.actions.FindAction("rotate");
         clickAction = InputSystem.actions.FindAction("click");
         escapeAction = InputSystem.actions.FindAction("escape");
+        zoomAction = InputSystem.actions.FindAction("zoom");
 
 
     }
@@ -66,7 +68,8 @@ public class PlayerController : MonoBehaviour
 
         }
 
-
+        float zoomValue = zoomAction.ReadValue<float>();
+        cinemachineFollow.FollowOffset = new Vector3(0.0f, 0.0f, cinemachineFollow.FollowOffset.z + zoomValue * -1);
 
     }
     private IFocusable setFocusable(IFocusable currentObject, int layerMask)
