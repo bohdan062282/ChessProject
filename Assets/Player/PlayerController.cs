@@ -11,10 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform cameraCenterObject;
 
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private LayerMask figureLayerMask;
-    [SerializeField] private LayerMask highlighterLayerMask;
 
-    [SerializeField] private FigureColor playerColor;
+    [SerializeField] private LayerMask highlighterLayerMask;
 
     [SerializeReference] private ChessboardScript chessboardScript;
 
@@ -26,6 +24,8 @@ public class PlayerController : MonoBehaviour
     private IFocusable _focusItem;
     private IFocusable _focusField;
 
+    private Game game;
+
     void Start()
     {
         rotateAction = InputSystem.actions.FindAction("rotate");
@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
         escapeAction = InputSystem.actions.FindAction("escape");
         zoomAction = InputSystem.actions.FindAction("zoom");
 
+        game = new Game();
 
     }
 
@@ -54,7 +55,7 @@ public class PlayerController : MonoBehaviour
             _focusField = setFocusable(_focusField, highlighterLayerMask);
             HighlighterScript highlighter = _focusField as HighlighterScript;
 
-            _focusItem = setFocusable(_focusItem, figureLayerMask);
+            _focusItem = setFocusable(_focusItem, game.getColor());
             Figure selectedFigure = _focusItem as Figure;
 
             if (clickAction.WasPerformedThisFrame())
