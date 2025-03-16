@@ -51,9 +51,10 @@ public class ChessboardScript : MonoBehaviour
 
         FigureMoves figureMoves = _selectedFigure.getMoves();
 
-        if (figure is King) setSafeMoves(figureMoves, figure);
+        if (figure is King) setSafeMoves(figureMoves, figure as King);
+        else setSafeMoves(figureMoves, figure);
 
-        highlighters.setPoolLegal(figureMoves.LegalMoves, this);
+            highlighters.setPoolLegal(figureMoves.LegalMoves, this);
         highlighters.setPoolAttack(figureMoves.AttackMoves, this);
 
     }
@@ -111,7 +112,7 @@ public class ChessboardScript : MonoBehaviour
         }
         else return null;
     }
-    private void setSafeMoves(FigureMoves figureMoves, Figure king)
+    private void setSafeMoves(FigureMoves figureMoves, King king)
     {
         for (int i = 0; i < figureMoves.LegalMoves.Count; i++)
         {
@@ -128,6 +129,46 @@ public class ChessboardScript : MonoBehaviour
                 figureMoves.AttackMoves.RemoveAt(i);
                 i--;
             }
+        }
+    }
+    private void setSafeMoves(FigureMoves figureMoves, Figure figure)
+    {
+        Figure king = _selectedFigure.Type == FigureColor.WHITE ? WhiteKing : BlackKing;
+
+        for (int i = 0; i < figureMoves.LegalMoves.Count; i++)
+        {
+            (int x, int z) coord = (figureMoves.LegalMoves[i].X, figureMoves.LegalMoves[i].Z);
+
+            Figure tmpDelFigure = _chessboard[coord.x, coord.z].figure;
+            _chessboard[figure.X, figure.Z].figure = null;
+            _chessboard[coord.x, coord.z].figure = figure;
+
+            if (checkKingDanger(king, king.X, king.Z))
+            {
+                figureMoves.LegalMoves.RemoveAt(i);
+                i--;
+            }
+
+            _chessboard[figure.X, figure.Z].figure = figure;
+            _chessboard[coord.x, coord.z].figure = tmpDelFigure;
+        }
+
+        for (int i = 0; i < figureMoves.AttackMoves.Count; i++)
+        {
+            (int x, int z) coord = (figureMoves.AttackMoves[i].X, figureMoves.AttackMoves[i].Z);
+
+            Figure tmpDelFigure = _chessboard[coord.x, coord.z].figure;
+            _chessboard[figure.X, figure.Z].figure = null;
+            _chessboard[coord.x, coord.z].figure = figure;
+
+            if (checkKingDanger(king, king.X, king.Z))
+            {
+                figureMoves.AttackMoves.RemoveAt(i);
+                i--;
+            }
+
+            _chessboard[figure.X, figure.Z].figure = figure;
+            _chessboard[coord.x, coord.z].figure = tmpDelFigure;
         }
     }
     public bool checkKingDanger(Figure king, int x, int z)

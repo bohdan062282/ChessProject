@@ -10,7 +10,7 @@ public class Game
 
     public Game()
     {
-        _currentPlayerColor = Game.BLACK;
+        _currentPlayerColor = Game.WHITE;
     }
 
 
