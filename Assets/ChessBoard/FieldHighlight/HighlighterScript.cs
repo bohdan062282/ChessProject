@@ -35,8 +35,8 @@ public class HighlighterScript : MonoBehaviour, IFocusable
     {
         m_Renderer.material.color = _color;
     }
-    public void select()
+    public bool select()
     {
-        _chessboard.moveTo(X, Z);
+        return _chessboard.moveTo(X, Z);
     }
 }

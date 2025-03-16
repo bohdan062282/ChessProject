@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class ChessboardScript : MonoBehaviour
 {
@@ -58,7 +57,7 @@ public class ChessboardScript : MonoBehaviour
         highlighters.setPoolAttack(figureMoves.AttackMoves, this);
 
     }
-    public void moveTo(int x, int z)
+    public bool moveTo(int x, int z)
     {
         if (_selectedFigure != null)
         {
@@ -84,8 +83,9 @@ public class ChessboardScript : MonoBehaviour
                 figure.setCoord(x, z);
                 figure.setTransformPosition();
             }
-
+            return true;
         }
+        else return false;
     }
     public void unselectFigure()
     {
@@ -112,6 +112,24 @@ public class ChessboardScript : MonoBehaviour
         }
         else return null;
     }
+    public bool isEnd(FigureColor figureColor)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                Figure figure = _chessboard[i, j].figure;
+                if (figure != null && figure.Type == figureColor)
+                {
+                    FigureMoves figureMoves = figure.getMoves();
+                    if (figure is King) setSafeMoves(figureMoves, figure as King);
+                    else setSafeMoves(figureMoves, figure);
+                    if (figureMoves.LegalMoves.Count > 0 || figureMoves.AttackMoves.Count > 0) return false;
+                }
+            }
+        }
+        return true;
+    }
     private void setSafeMoves(FigureMoves figureMoves, King king)
     {
         for (int i = 0; i < figureMoves.LegalMoves.Count; i++)
@@ -121,7 +139,7 @@ public class ChessboardScript : MonoBehaviour
                 figureMoves.LegalMoves.RemoveAt(i);
                 i--;
             }
-        } 
+        }
         for (int i = 0; i < figureMoves.AttackMoves.Count; i++)
         {
             if (checkKingDanger(king, figureMoves.AttackMoves[i].X, figureMoves.AttackMoves[i].Z))
@@ -133,7 +151,7 @@ public class ChessboardScript : MonoBehaviour
     }
     private void setSafeMoves(FigureMoves figureMoves, Figure figure)
     {
-        Figure king = _selectedFigure.Type == FigureColor.WHITE ? WhiteKing : BlackKing;
+        Figure king = figure.Type == FigureColor.WHITE ? WhiteKing : BlackKing;
 
         for (int i = 0; i < figureMoves.LegalMoves.Count; i++)
         {

@@ -6,16 +6,26 @@ public class Game
     public static readonly LayerMask BLACK = LayerMask.GetMask("Black");
 
 
-    private LayerMask _currentPlayerColor;
+    private FigureColor _currentPlayerColor;
+    private ChessboardScript _chessboard;
 
-    public Game()
+    public Game(ChessboardScript chessboard)
     {
-        _currentPlayerColor = Game.WHITE;
+        _currentPlayerColor = FigureColor.BLACK;
+        _chessboard = chessboard;
     }
+    public void makeMove()
+    {
+        changeColor();
+
+        if (_chessboard.isEnd(_currentPlayerColor)) Debug.Log("MAT!!");
+    }
+    private void changeColor() => _currentPlayerColor = _currentPlayerColor == FigureColor.WHITE ? FigureColor.BLACK : FigureColor.WHITE;
 
 
 
 
-    public LayerMask getColor() => _currentPlayerColor;
+    public LayerMask getColorMask() => _currentPlayerColor == FigureColor.WHITE ? Game.WHITE : Game.BLACK;
+    public FigureColor getColor() => _currentPlayerColor;
     
 }

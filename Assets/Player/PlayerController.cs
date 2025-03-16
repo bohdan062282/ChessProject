@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         escapeAction = InputSystem.actions.FindAction("escape");
         zoomAction = InputSystem.actions.FindAction("zoom");
 
-        game = new Game();
+        game = new Game(chessboardScript);
 
     }
 
@@ -55,13 +55,15 @@ public class PlayerController : MonoBehaviour
             _focusField = setFocusable(_focusField, highlighterLayerMask);
             HighlighterScript highlighter = _focusField as HighlighterScript;
 
-            _focusItem = setFocusable(_focusItem, game.getColor());
+            _focusItem = setFocusable(_focusItem, game.getColorMask());
             Figure selectedFigure = _focusItem as Figure;
 
             if (clickAction.WasPerformedThisFrame())
             {
                 if (highlighter != null)
-                    highlighter.select();
+                {
+                    if (highlighter.select()) game.makeMove();
+                }   
                 else if (selectedFigure != null)
                     selectedFigure.select();
             }
