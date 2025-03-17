@@ -14,13 +14,13 @@ public class ChessboardGenerator
 
 
     public static readonly int[,] BASIC_LAYOUT = new int[,] {   { 2, 1, 0, 0 ,0 ,0 ,7 ,8 },
-                                                                { 3, 1, 0, 10 ,0 ,0 ,7 ,9 },
-                                                                { 0, 8, 0, 0 ,0 ,0 ,7 ,10 },
-                                                                { 0, 1, 0, 0 ,0 ,0 ,7 ,11 },
+                                                                { 3, 1, 0, 0 ,0 ,0 ,7 ,9 },
+                                                                { 4, 1, 0, 0 ,0 ,0 ,7 ,10 },
+                                                                { 5, 1, 0, 0 ,0 ,0 ,7 ,11 },
                                                                 { 6, 1, 0, 0 ,0 ,0 ,7 ,12 },
                                                                 { 4, 1, 0, 0 ,0 ,0 ,7 ,10 },
                                                                 { 3, 1, 0, 0 ,0 ,0 ,7 ,9 },
-                                                                { 2, 1, 7, 0 ,0 ,0 ,7 ,8 }};
+                                                                { 2, 1, 0, 0 ,0 ,0 ,7 ,8 }};
 
     public void InitializeFigures(ChessboardScript chessboard, int[,] layout)
     {

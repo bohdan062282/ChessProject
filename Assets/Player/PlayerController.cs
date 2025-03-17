@@ -24,7 +24,9 @@ public class PlayerController : MonoBehaviour
     private IFocusable _focusItem;
     private IFocusable _focusField;
 
-    private Game game;
+    private Game _game;
+
+    private Quaternion _basicWhiteRotation;
 
     void Start()
     {
@@ -33,7 +35,9 @@ public class PlayerController : MonoBehaviour
         escapeAction = InputSystem.actions.FindAction("escape");
         zoomAction = InputSystem.actions.FindAction("zoom");
 
-        game = new Game(chessboardScript);
+        _game = new Game(chessboardScript, this);
+
+        _basicWhiteRotation = cameraCenterObject.transform.rotation;
 
     }
 
@@ -55,14 +59,14 @@ public class PlayerController : MonoBehaviour
             _focusField = setFocusable(_focusField, highlighterLayerMask);
             HighlighterScript highlighter = _focusField as HighlighterScript;
 
-            _focusItem = setFocusable(_focusItem, game.getColorMask());
+            _focusItem = setFocusable(_focusItem, _game.getColorMask());
             Figure selectedFigure = _focusItem as Figure;
 
             if (clickAction.WasPerformedThisFrame())
             {
                 if (highlighter != null)
                 {
-                    if (highlighter.select()) game.makeMove();
+                    if (highlighter.select()) _game.makeMove();
                 }   
                 else if (selectedFigure != null)
                     selectedFigure.select();
@@ -113,6 +117,15 @@ public class PlayerController : MonoBehaviour
             return hit.collider.gameObject;
         else return null;
 
+    }
+    public void setCameraWhite()
+    {
+        cameraCenterObject.rotation = _basicWhiteRotation;
+    }
+    public void setCameraBlack()
+    {
+        cameraCenterObject.rotation = _basicWhiteRotation;
+        cameraCenterObject.Rotate(0.0f, 180.0f, 0.0f, Space.World);
     }
 
 }
